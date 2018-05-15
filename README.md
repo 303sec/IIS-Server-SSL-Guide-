@@ -1,14 +1,14 @@
 # IIS-Server-SSL-Guide
 Getting and adding an SSL certificate to a site on Windows Server 2012 with Let's Encrypt using ACMEbot.
 
-Step 1: Install Powershell Gallery (?)
+# Step 1: Install Powershell Gallery (?)
 set-executionpolicy unrestricted
 
 Install-Module -Name ACMESharp
 Install-Module -Name ACMESharp.Providers.IIS
 Enable-ACMEExtensionModule -ModuleName ACMESharp.Providers.IIS
 
-## check to see if worked:
+### check to see if worked:
  Get-ACMEExtensionModule | Select-Object -Expand Name
 
 Import-Module ACMESharp 
@@ -17,19 +17,19 @@ Initialize-ACMEVault
 
 New-ACMERegistration -Contacts mailto:<email@email.com> -AcceptTos
 
-## Make sure the IIS Challenge Handler is available
+### Make sure the IIS Challenge Handler is available
 Get-ACMEChallengeHandlerProfile -ListChallengeHandlers 
-## You should see this:
+### You should see this:
 manual
 iis
 
-## But you probably won't! So do it manually!
+### But you probably won't! So do it manually!
 
 New-ACMEIdentifier -Dns <www.site.com> -Alias <Alias>
 
-#Print manual HTTP Instructions
+Print manual HTTP Instructions
 (Complete-ACMEChallenge dns1 -ChallengeType http-01 -Handler manual).Challenge
-# ...or...
+### ...or...
 (Update-ACMEIdentifier leeds -ChallengeType http-01).Challenges | Where-Object {$_.Type -eq "http-01"}
 
 
