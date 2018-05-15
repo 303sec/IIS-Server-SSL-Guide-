@@ -38,7 +38,7 @@ Print manual HTTP Instructions
 (Update-ACMEIdentifier leeds -ChallengeType http-01).Challenges | Where-Object {$_.Type -eq "http-01"}
 
 
-
+```
 HandlerHandleMessage   : == Manual Challenge Handler - HTTP ==
                            * Handle Time:      [21/03/2018 09:43:03]
                            * Challenge Token:  [<REDACTED>]
@@ -52,7 +52,7 @@ HandlerHandleMessage   : == Manual Challenge Handler - HTTP ==
                          [<REDACTED>]
                            * MIME Type:    [text/plain]
                          ------------------------------------
-
+```
 
 
 
