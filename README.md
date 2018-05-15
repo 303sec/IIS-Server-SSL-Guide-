@@ -13,23 +13,28 @@ Enable-ACMEExtensionModule -ModuleName ACMESharp.Providers.IIS
 
 Import-Module ACMESharp 
 
+# Step 2: Use ACMESharp to request a certificate
+
 Initialize-ACMEVault
 
 New-ACMERegistration -Contacts mailto:<email@email.com> -AcceptTos
 
 ### Make sure the IIS Challenge Handler is available
 Get-ACMEChallengeHandlerProfile -ListChallengeHandlers 
+
 ### You should see this:
 manual
 iis
 
-### But you probably won't! So do it manually!
+## But you probably won't! So do it manually!
 
 New-ACMEIdentifier -Dns <www.site.com> -Alias <Alias>
 
 Print manual HTTP Instructions
 (Complete-ACMEChallenge dns1 -ChallengeType http-01 -Handler manual).Challenge
+
 ### ...or...
+
 (Update-ACMEIdentifier leeds -ChallengeType http-01).Challenges | Where-Object {$_.Type -eq "http-01"}
 
 
@@ -78,20 +83,20 @@ Submit-ACMEChallenge leeds -ChallengeType http-01
 (Update-ACMEIdentifier dns1 -ChallengeType http-01).Challenges | Where-Object {$_.Type -eq "http-01"}
 
 
-# Request & Issue Certificate
+### Request & Issue Certificate
 New-ACMECertificate <Alias> -Generate -Alias <newAlias>
 Submit-ACMECertificate <newAlias>
 
-# Now wait for the cerificate to be resolved. If there are missing bits of text, then it isn't resolved! Check on it with this command:
+### Now wait for the cerificate to be resolved. If there are missing bits of text, then it isn't resolved! Check on it with this command:
 Update-ACMECertificate <newAlias>
 
-# Generate Certificate
+### Generate Certificate
 Get-ACMECertificate <newAlias> -ExportPkcs12 "C:\certificate.pfx" -CertificatePassword 'certPass'
 
 
-# Install via IIS by going to servername > server certificates > import
+### Install via IIS by going to servername > server certificates > import
 
-# Bind the SSL Certificate by right-clicking on the webpage > edit bindings. Edit HTTPS and select the new SSL certificate.
+### Bind the SSL Certificate by right-clicking on the webpage > edit bindings. Edit HTTPS and select the new SSL certificate.
 
 Test that everything is working!
 
