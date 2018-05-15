@@ -15,7 +15,7 @@ Import-Module ACMESharp
 
 Initialize-ACMEVault
 
-New-ACMERegistration -Contacts mailto:gordon.murray@shaw-online.com -AcceptTos
+New-ACMERegistration -Contacts mailto:<email@email.com> -AcceptTos
 
 ## Make sure the IIS Challenge Handler is available
 Get-ACMEChallengeHandlerProfile -ListChallengeHandlers 
@@ -25,7 +25,7 @@ iis
 
 ## But you probably won't! So do it manually!
 
-New-ACMEIdentifier -Dns www.leedscreditunion.co.uk -Alias leeds
+New-ACMEIdentifier -Dns <www.site.com> -Alias <Alias>
 
 #Print manual HTTP Instructions
 (Complete-ACMEChallenge dns1 -ChallengeType http-01 -Handler manual).Challenge
@@ -36,16 +36,15 @@ New-ACMEIdentifier -Dns www.leedscreditunion.co.uk -Alias leeds
 
 HandlerHandleMessage   : == Manual Challenge Handler - HTTP ==
                            * Handle Time:      [21/03/2018 09:43:03]
-                           * Challenge Token:  [9IRbtgvJN0jhrsM4fpT58LDuotRFgsmSRd59AQ_puYg]
+                           * Challenge Token:  [<REDACTED>]
 
                          To complete this Challenge please create a new file
                          under the server that is responding to the hostname
                          and path given with the following characteristics:
-                           * HTTP URL:     [http://www.leedscreditunion.co.uk/.well-known/acme-challenge/9IRbtgvJN0jhrs
-                         M4fpT58LDuotRFgsmSRd59AQ_puYg]
-                           * File Path:    [.well-known/acme-challenge/9IRbtgvJN0jhrsM4fpT58LDuotRFgsmSRd59AQ_puYg]
+                           * HTTP URL:     [<REDACTED>]
+                           * File Path:    [.well-known/acme-challenge/<REDACTED>]
                            * File Content:
-                         [9IRbtgvJN0jhrsM4fpT58LDuotRFgsmSRd59AQ_puYg.ZVKlJgnFX0Ai0KTloyRchbLwC5_4UoZf_9tok_u8f9A]
+                         [<REDACTED>]
                            * MIME Type:    [text/plain]
                          ------------------------------------
 
@@ -67,6 +66,7 @@ To allow IIS to serve . folders, add a web.config to .well-known/acme-challenge 
 
 
 
+
 THEN CHECK IF IT WORKS IN BROWSER
 
 
@@ -79,14 +79,14 @@ Submit-ACMEChallenge leeds -ChallengeType http-01
 
 
 # Request & Issue Certificate
-New-ACMECertificate leeds -Generate -Alias leedscertificate
-Submit-ACMECertificate leedscertificate
+New-ACMECertificate <Alias> -Generate -Alias <newAlias>
+Submit-ACMECertificate <newAlias>
 
 # Now wait for the cerificate to be resolved. If there are missing bits of text, then it isn't resolved! Check on it with this command:
-Update-ACMECertificate leedscertificate
+Update-ACMECertificate <newAlias>
 
 # Generate Certificate
-Get-ACMECertificate leedscertificate -ExportPkcs12 "C:\certificate.pfx" -CertificatePassword 'certPass'
+Get-ACMECertificate <newAlias> -ExportPkcs12 "C:\certificate.pfx" -CertificatePassword 'certPass'
 
 
 # Install via IIS by going to servername > server certificates > import
