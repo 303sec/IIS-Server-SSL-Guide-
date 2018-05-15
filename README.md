@@ -28,7 +28,7 @@ iis
 
 ## But you probably won't! So do it manually!
 
-New-ACMEIdentifier -Dns <www.site.com> -Alias <Alias>
+New-ACMEIdentifier -Dns <www.site.com> -Alias \<Alias\>
 
 Print manual HTTP Instructions
 (Complete-ACMEChallenge dns1 -ChallengeType http-01 -Handler manual).Challenge
@@ -60,6 +60,7 @@ To add .well-known dir you need to add a dot at start & end when creating direct
 
 To allow IIS to serve . folders, add a web.config to .well-known/acme-challenge with this information:
 
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
  <configuration>
      <system.webServer>
@@ -68,7 +69,7 @@ To allow IIS to serve . folders, add a web.config to .well-known/acme-challenge 
          </staticContent>
      </system.webServer>
  </configuration>
-
+```
 
 
 
@@ -84,14 +85,14 @@ Submit-ACMEChallenge leeds -ChallengeType http-01
 
 
 ### Request & Issue Certificate
-New-ACMECertificate <Alias> -Generate -Alias <newAlias>
-Submit-ACMECertificate <newAlias>
+New-ACMECertificate \<Alias\> -Generate -Alias \<newAlias\>
+Submit-ACMECertificate \<newAlias\>
 
 ### Now wait for the cerificate to be resolved. If there are missing bits of text, then it isn't resolved! Check on it with this command:
-Update-ACMECertificate <newAlias>
+Update-ACMECertificate \<newAlias\>
 
 ### Generate Certificate
-Get-ACMECertificate <newAlias> -ExportPkcs12 "C:\certificate.pfx" -CertificatePassword 'certPass'
+Get-ACMECertificate \<newAlias\> -ExportPkcs12 "C:\certificate.pfx" -CertificatePassword 'certPass'
 
 
 ### Install via IIS by going to servername > server certificates > import
